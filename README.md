@@ -1,4 +1,5 @@
-practice-exercises
+Programming-practice
 ==================
 
-Solutions for programming problems found throughout the web
+Data Structures, Algorithm, Brain Teasers, etcetera...
+Code to practice the basics.
