@@ -85,15 +85,16 @@ public class BinarySearchTree{
 	private Node delete(Node x, int key){
 		if(x == null) return null;
 		
-		if(key < x.val) delete(x.left, key);
-		else if(key > x.val) delete(x.right, key);
+		if(key < x.data) delete(x.left, key);
+		else if(key > x.data) delete(x.right, key);
 		else{
 			//Case 1 and 2: Node has no children or only a left child
 			if(x.right == null) return x.left;
 
 			Node temp = x;
-			x.val = min(x.right);
-			x.right = deleteMin(t.right);
+			Node min = min(x.right);
+			x.data = min.data;
+			x.right = deleteMin(temp.right);
 			x.left = temp.left;
 		}
 		//x.count --> update here
@@ -105,8 +106,8 @@ public class BinarySearchTree{
 	    ***********************************************************************/
 
 	public int min() {
-		if (isEmpty()) return null;
-		return min(root).key;
+		if (isEmpty()) return -1; //change this
+		return min(root).data;
 	} 
 
 	private Node min(Node x) { 
@@ -116,6 +117,10 @@ public class BinarySearchTree{
 			return min(x.left); 
 	} 
 
+	public boolean isEmpty(){
+		return root == null;
+	}
+	
 
 	public static void main(String[] args){
 		BinarySearchTree bst = new BinarySearchTree();
@@ -123,6 +128,8 @@ public class BinarySearchTree{
 		bst.insert(8);
 		bst.insert(3);
 		bst.insert(9);
+		bst.insert(2);
+		bst.insert(10);
 
 		LinkedList<Integer> list = new LinkedList<Integer>();
 		inorderTraversal(bst.root, list);
