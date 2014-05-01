@@ -36,4 +36,58 @@ public class UniquePaths {
 		
 		return matrix[y + 1][x] + matrix[y][x + 1];
 	}
+
+	/**
+	  *	Follow up:
+	  *	Now consider if some obstacles are added to the grids. How many unique paths would there be?
+	  *	An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+	**/
+
+
+	public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        if(obstacleGrid[0][0] == 1)
+            return 0;
+            
+		int rows = obstacleGrid.length;
+		int columns = obstacleGrid[0].length;
+        int[][] matrix = new int[rows + 1][columns + 1];
+        for(int i = 0; i < (rows + 1); i++){
+			for(int j = 0; j < (columns + 1); j++){
+				if(i == rows || j == columns)
+					matrix[i][j] = -1;
+				else{
+					if(obstacleGrid[i][j] == 1)
+						matrix[i][j] = 0;
+					else
+						matrix[i][j] = -1;
+				}
+			}
+		}
+        
+        return uniquePathsObstacles(0, 0,  columns - 1, rows - 1, matrix);
+    }
+	
+	public int uniquePathsObstacles(int x, int y, int xLimit, int yLimit, int[][] matrix){
+		if(x == xLimit && y == yLimit){
+			if(matrix[y][x] == 0)
+				return 0;
+			else 
+			    return 1;
+		}
+		
+		if(x > xLimit || y > yLimit )
+			return 0;
+		
+		if(matrix[y + 1][x] == -1)
+			matrix[y + 1][x] = uniquePathsObstacles(x, y + 1, xLimit, yLimit, matrix);
+		
+		if(matrix[y][x + 1] == -1)
+			matrix[y][x + 1] =  uniquePathsObstacles(x + 1, y, xLimit, yLimit, matrix);
+		
+		return matrix[y + 1][x] + matrix[y][x + 1];
+	}
+
+	public static void main(String[] args){
+
+	}
 }
