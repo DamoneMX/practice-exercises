@@ -1,14 +1,36 @@
-import java.util.*;
+ /**
+ * Solution: Still need to do this iteratively
+ */
 public class SymmetricTree{
 
-	public class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode(int x) { val = x; }
- 	}
-
 	public boolean isSymmetric(TreeNode root){
+		if(root == null)
+			return true;
+		
+		return isSymmetric(root.left, root.right);
+	}
+
+	public boolean isSymmetric(TreeNode leftNode, TreeNode rightNode){
+		if(leftNode == null && rightNode == null)
+			return true;
+		
+		if((leftNode == null && rightNode != null) || (leftNode != null && rightNode == null))
+			return false;
+		
+		if(leftNode.val != rightNode.val)
+			return false;
+		
+		if(!isSymmetric(leftNode.left, rightNode.right) )
+			return false;
+		
+		if(!isSymmetric(leftNode.right, rightNode.left))
+			return false;
+		
+		return true;
+	}
+
+
+	public boolean isSymmetricFirstTRY(TreeNode root){
 		if(root == null) return true;
 		if(root != null && root.right != null){
 			LinkedList<Integer> register1 = new LinkedList<Integer>();			
