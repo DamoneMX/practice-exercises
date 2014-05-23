@@ -75,4 +75,68 @@ public class BinaryTreeLevelOrderTraversal {
 		
 		return results;
     }
+
+
+	/*
+	 * Follow up: 
+	 * Given a binary tree, return the bottom-up level order traversal of its nodes' values. 
+	 * (ie, from left to right, level by level from leaf to root).
+	 * Solution: Several ways to do this, using stack in this solution
+	 */
+    public ArrayList<ArrayList<Integer>> levelOrderBottom(TreeNode root) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+		if(root == null)
+			return result;
+		
+		Queue<TreeNode> visited = new LinkedList<TreeNode>();
+		Stack<TreeNode> finalStack = new Stack<TreeNode>();
+		
+		finalStack.push(root);
+		finalStack.push(null);
+		visited.add(root);
+		visited.add(null);
+		while(!visited.isEmpty()){
+			TreeNode node = visited.poll();
+			if(node != null){
+				//levelNumbers.add(node.val);
+				
+				if(node.right != null){
+					visited.add(node.right);
+					finalStack.add(node.right);
+				}
+				if(node.left != null){
+					visited.add(node.left);
+					finalStack.push(node.left);
+				}
+				
+			}
+			else{
+				//result.add(levelNumbers);
+				visited.add(null);
+				
+				if(visited.size() == 1)
+					break;
+				else
+				    finalStack.push(null);
+				//levelNumbers = new ArrayList<Integer>();
+			}
+		}
+		
+		finalStack.pop();
+		ArrayList<Integer> levelNumbers = new ArrayList<Integer>();
+		while(!finalStack.isEmpty()){
+			TreeNode node = finalStack.pop();
+			if(node != null){
+				levelNumbers.add(node.val);
+			}
+			else{
+				result.add(levelNumbers);
+				levelNumbers = new ArrayList<Integer>();
+			}
+		}
+		
+		result.add(levelNumbers);
+		
+		return result;
+    }
 }
