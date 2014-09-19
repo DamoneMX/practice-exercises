@@ -47,10 +47,6 @@ public class LongestPalindromicSubstring {
             }
         }
 
-       // System.out.println(start);
-       // System.out.println(end + 1);
-
-
         return s.substring(start, end + 1);
     }
 

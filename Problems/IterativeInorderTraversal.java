@@ -39,4 +39,29 @@ public class Solution {
 	return result;
  
     }
+
+    public ArrayList<Integer> inorderTraversalV2(TreeNode root) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        if(root == null)
+            return result;
+        
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.push(root);
+        
+        while(!stack.isEmpty()) {
+            TreeNode currNode = stack.pop();
+            if(currNode.left != null){
+                stack.push(currNode);
+                stack.push(currNode.left);
+                currNode.left = null;
+            } else {
+                result.add(currNode.val);
+                if(currNode.right != null)
+                    stack.push(currNode.right);
+                currNode.right = null;
+            }  
+        }
+        
+        return result;
+    }
 }

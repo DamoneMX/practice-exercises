@@ -41,4 +41,28 @@ public class BinaryTreePostorderTraversal{
         
         return result;
     }
+
+    public ArrayList<Integer> preorderTraversalV2(TreeNode root) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        if(root == null){
+            return result;
+        }
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.push(root);
+        
+        while(!stack.isEmpty()) {
+            TreeNode currNode = stack.pop();
+            if(currNode.right != null){
+                stack.push(currNode.right);
+            }
+            
+            if(currNode.left != null) {
+                stack.push(currNode.left);
+            }
+            
+            result.add(currNode.val);
+        }
+        
+        return result;
+    }
 }

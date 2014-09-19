@@ -9,6 +9,7 @@ public class ValidSudoku {
     public static boolean isValidSudoku(char[][] board){
         HashSet<Character> register = new HashSet<Character>();
         
+        //Check that row doesn't contain a repeated character
         for(int i = 0; i < board.length; i++) {
             for(int j = 0; j < board[i].length; j++) {
                 if(board[i][j] == '.')
@@ -22,6 +23,7 @@ public class ValidSudoku {
             register = new HashSet<Character>();
         }
 
+        //check that column doesn't contain repeated characters
         for(int i = 0; i < board.length; i++) {
             for(int j = 0; j < board[i].length; j++) {
                 if(board[j][i] == '.')
@@ -35,7 +37,7 @@ public class ValidSudoku {
             register = new HashSet<Character>();
         }
         
-        System.out.println("here");
+        //check that subgrid doesn't contain repeated character
         for(int i = 0; i < 7; i = i + 3){
             for(int j = 0; j < 7; j = j + 3){
                 for(int k = i; k < i + 3; k++){

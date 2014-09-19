@@ -30,4 +30,28 @@ public class Solution {
         
         return head;
     }
+
+    public ListNode deleteDuplicatesV2(ListNode head) {
+        if(head == null)
+            return head;
+            
+        if(head.next != null && head.val == head.next.val)
+            head = head.next;
+        
+        ListNode beacon = head;
+        while(beacon != null) {
+            if(beacon.next != null && beacon.val != beacon.next.val) {
+                beacon = beacon.next;
+                continue;
+            }
+            
+            if(beacon.next != null && beacon.val == beacon.next.val)
+                beacon.next = beacon.next.next;
+            
+            if(beacon.next == null || beacon.val != beacon.next.val)
+                beacon = beacon.next;
+        }
+        
+        return head;
+    }
 }
