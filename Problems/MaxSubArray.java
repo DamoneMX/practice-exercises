@@ -28,4 +28,24 @@ public class Solution{
         
         return max;
     }
+
+    public int maxSubArray(int[] A) {
+        if(A.length == 0)
+            return 0;
+            
+        if(A.length == 1)
+            return A[0];
+        
+        int currSum = 0;
+        int maxSum = Integer.MIN_VALUE;
+        for(int i = 0; i < A.length; i++) {
+            if(A[i] + currSum > A[i])
+                currSum += A[i];
+            else
+                currSum = A[i];
+            maxSum = Math.max(currSum, maxSum);
+        }
+        
+        return maxSum;
+    }
 }
