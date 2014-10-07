@@ -47,4 +47,49 @@ public class PopulateNextRightPointers{
             prev = curr;
         }
     }
+
+    public void connect(TreeLinkNode root) {
+        if(root == null)
+            return;
+            
+        if(root.left != null) {
+            if(root.right != null) {
+                root.left.next = root.right;
+            } else {
+                TreeLinkNode temp = root.next;
+                while(temp != null) {
+                    if(temp.left != null){
+                        root.left.next = temp.left;
+                        break;
+                    } else if(temp.right != null){
+                        root.left.next = temp.right;
+                        break;
+                    } 
+                    temp = temp.next;
+                }   
+            }
+        }
+        
+        if(root.right != null) {
+           TreeLinkNode temp = root.next;
+                while(temp != null) {
+                    if(temp.left != null){
+                        root.right.next = temp.left;
+                        break;
+                    } else if(temp.right != null){
+                        root.right.next = temp.right;
+                        break;
+                    } 
+                    
+                    temp = temp.next;
+                }
+        }
+        
+        if(root.right != null)
+            connect(root.right);
+            
+        if(root.left != null)
+            connect(root.left);   
+        
+    }
 }
