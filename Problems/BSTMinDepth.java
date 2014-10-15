@@ -35,4 +35,23 @@ public class BSTMinDepth {
 		
 		return Math.min(n1, n2);
 	}
+
+	//Same solution, different structure
+    public int findMinDepth(TreeNode node, int currentDepth){
+        if(node.left == null && node.right == null)
+            return currentDepth;
+            
+        int leftDepth = Integer.MAX_VALUE;
+        if(node.left != null)
+            leftDepth = findMinDepth(node.left, currentDepth + 1);
+            
+        int rightDepth = Integer.MAX_VALUE;    
+        if(node.right != null)
+            rightDepth = findMinDepth(node.right, currentDepth + 1);
+            
+        int response = leftDepth;
+        response = Math.min(response, rightDepth);
+        return response;
+    }
+
 }
