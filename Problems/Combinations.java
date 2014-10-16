@@ -6,6 +6,37 @@
  * 
  */
 public class Combinations {
+
+	//2nd version, a little bit cleaner
+	public static ArrayList<ArrayList<Integer>> combine(int n, int k) {
+        ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
+        if(n == 0 || k == 0)
+            return results;
+            
+        for(int i = 1; i <= n; i++) {
+        	ArrayList<Integer> current = new ArrayList<Integer>();
+            current.add(i);
+            findCombinations(i + 1, n, k, current, results);
+        }
+        
+        return results;
+    }
+    
+    public static void findCombinations(int current, int n, int k, ArrayList<Integer> result, ArrayList<ArrayList<Integer>> results){
+        if(result.size() == k) {
+
+            results.add(result);
+            return;
+        }
+        
+        for(int i = current; i <= n; i++) {
+            ArrayList<Integer> copy = new ArrayList<Integer>();
+            copy.addAll(result);
+            copy.add(i);
+            findCombinations(i + 1, n, k, copy, results);
+        }  
+    }
+
     public ArrayList<ArrayList<Integer>> combine(int n, int k) {
 		if(k > n)
 			return new ArrayList<ArrayList<Integer>>();

@@ -2,6 +2,40 @@
  * Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
  */
 public class BinaryTreeLevelOrderTraversal {
+
+	//Version 2: BFS
+	public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(root == null)
+            return result;
+            
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        queue.add(null);
+        ArrayList<Integer> level = new ArrayList<Integer>();
+        while(queue.isEmpty() == false) {
+            TreeNode node = queue.poll();
+            if(node == null) { //we have changed levels, add to results
+                //if queue is not empty
+                if(queue.isEmpty() == false){
+                    queue.add(null);
+                }
+                result.add(level);
+                level = new ArrayList<Integer>();
+            } else{
+                level.add(node.val);
+                
+                if(node.left != null)
+                    queue.add(node.left);
+                
+                if(node.right != null)
+                    queue.add(node.right);
+            }
+        }
+        
+        return result;
+    }
+
     /*
 	 * Level Order Traversal implemented using BFS and 1 Queue, 
 	 * Same as 2 Queues solutions, But null elements represent we are moving on to next level
@@ -82,61 +116,42 @@ public class BinaryTreeLevelOrderTraversal {
 	 * Given a binary tree, return the bottom-up level order traversal of its nodes' values. 
 	 * (ie, from left to right, level by level from leaf to root).
 	 * Solution: Several ways to do this, using stack in this solution
+	 * Replaced on Oct/15/2014
 	 */
     public ArrayList<ArrayList<Integer>> levelOrderBottom(TreeNode root) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-		if(root == null)
-			return result;
-		
-		Queue<TreeNode> visited = new LinkedList<TreeNode>();
-		Stack<TreeNode> finalStack = new Stack<TreeNode>();
-		
-		finalStack.push(root);
-		finalStack.push(null);
-		visited.add(root);
-		visited.add(null);
-		while(!visited.isEmpty()){
-			TreeNode node = visited.poll();
-			if(node != null){
-				//levelNumbers.add(node.val);
-				
-				if(node.right != null){
-					visited.add(node.right);
-					finalStack.add(node.right);
-				}
-				if(node.left != null){
-					visited.add(node.left);
-					finalStack.push(node.left);
-				}
-				
-			}
-			else{
-				//result.add(levelNumbers);
-				visited.add(null);
-				
-				if(visited.size() == 1)
-					break;
-				else
-				    finalStack.push(null);
-				//levelNumbers = new ArrayList<Integer>();
-			}
-		}
-		
-		finalStack.pop();
-		ArrayList<Integer> levelNumbers = new ArrayList<Integer>();
-		while(!finalStack.isEmpty()){
-			TreeNode node = finalStack.pop();
-			if(node != null){
-				levelNumbers.add(node.val);
-			}
-			else{
-				result.add(levelNumbers);
-				levelNumbers = new ArrayList<Integer>();
-			}
-		}
-		
-		result.add(levelNumbers);
-		
-		return result;
+        Stack<ArrayList<Integer>> stack = new Stack<ArrayList<Integer>>();
+        if(root == null)
+            return result;
+            
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        queue.add(null);
+        ArrayList<Integer> level = new ArrayList<Integer>();
+        while(queue.isEmpty() == false) {
+            TreeNode node = queue.poll();
+            if(node == null) { //we have changed levels, add to results
+                //if queue is not empty
+                if(queue.isEmpty() == false){
+                    queue.add(null);
+                }
+                stack.add(level);
+                level = new ArrayList<Integer>();
+            } else{
+                level.add(node.val);
+                
+                if(node.left != null)
+                    queue.add(node.left);
+                
+                if(node.right != null)
+                    queue.add(node.right);
+            }
+        }
+        
+        while(!stack.isEmpty()){
+            result.add(stack.pop());
+        }
+        
+        return result;
     }
 }
