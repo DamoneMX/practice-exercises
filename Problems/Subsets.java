@@ -26,6 +26,37 @@ public class Subsets{
 		return results;
 	}
 
+	//Version 2 -> Recursive
+	public ArrayList<ArrayList<Integer>> subsets(int[] S) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        result.add(new ArrayList<Integer>()); 
+        if(S.length == 0)
+            return result;
+        
+        Arrays.sort(S);
+            
+        for(int i = 0; i < S.length; i++) {
+            ArrayList<Integer> set = new ArrayList<Integer>();
+            set.add(S[i]);
+            result.add(set);
+            addSubsets(i + 1, set, S, result);   
+        }
+        
+        return result;
+    }
+    
+    public void addSubsets(int index, ArrayList<Integer> set, int[] S, ArrayList<ArrayList<Integer>> result){
+        for(; index < S.length; index++) {
+            ArrayList<Integer> copy = new ArrayList<Integer>();
+            copy.addAll(set);
+            copy.add(S[index]);
+            result.add(copy);
+            addSubsets(index + 1, copy, S, result);
+        }
+    }
+
+
+
 	public static void main(String[] args){
 		int[] input = {1,2,3};
 		ArrayList<ArrayList<Integer>> result = subsets(input);

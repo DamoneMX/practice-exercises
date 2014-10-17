@@ -1,6 +1,25 @@
 
 public class JumpGame {
 
+    //2nd version
+    public boolean canJump(int[] A) {
+        if(A.length == 0)
+            return true;
+            
+        int length = A.length - 1;
+        int maxReach = A[0];
+        int limit = A[0];
+        for(int i = 1; i <= limit && i < A.length; i++) {
+            maxReach = Math.max(i + A[i], maxReach);
+            limit = Math.min(length, maxReach);
+        }
+        
+        if(maxReach >= length)
+            return true;
+        else 
+            return false;
+    }
+
 
 	/**
 	 * Follow Up: 
