@@ -43,4 +43,38 @@ public class RemoveNthFromEnd {
         }
         return head;
     }
+
+    //version 2
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head == null)
+            return head;
+            
+        int length = 1;
+        ListNode beacon = head;
+        while(beacon.next != null){
+            length++;
+            beacon = beacon.next;
+        }
+
+        if(n == length)
+            return head.next;
+            
+        beacon = head;
+        int steps = 1;
+        while(beacon != null) {
+            if(steps == ((length) - n)) {
+                if(n == 1)
+                    beacon.next = null;
+                else
+                    beacon.next = beacon.next.next;
+                return head;
+            }
+            
+            steps++;
+            beacon = beacon.next;   
+        }
+        
+        return beacon;
+    }
+
 }
