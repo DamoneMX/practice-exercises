@@ -9,6 +9,45 @@ public class LongestPalindromicSubstring {
         System.out.println(longestPalindrome("aracecart"));
     }
 
+    //Version 2 -> less checks a bit simpler, same idea
+    public String longestPalindrome(String s) {
+        if(s.length() == 0)
+            return "";
+        
+        String longestPalindrome = "";
+        for(int i = 0; i < s.length(); i++) {
+            String pal1 = findPalindrome(i, i, s);
+            if(pal1.length() > longestPalindrome.length()) {
+                longestPalindrome = pal1;
+            }
+            
+            if(i + 1 < s.length()) {
+                if(s.charAt(i) == s.charAt(i + 1)) {
+                    String pal2 = findPalindrome(i, i + 1, s);
+                    if(pal2.length() > longestPalindrome.length()) {
+                        longestPalindrome = pal2;
+                    }
+                }
+            }
+        }
+        
+        return longestPalindrome;
+    }
+    
+    public String findPalindrome(int start, int end, String s){
+        while(start - 1 >= 0 && end + 1 < s.length()) {
+            if(s.charAt(start - 1) == s.charAt(end + 1)) {
+                start--;
+                end++;
+            } else {
+                break;   
+            }
+        }
+        
+        return s.substring(start, end + 1);
+    }
+
+    //Version 1
     public static String longestPalindrome(String s) {
         if(s.length() == 0 || s.length() == 1) 
             return s; 
@@ -81,6 +120,49 @@ public class LongestPalindromicSubstring {
             end += 1;
 
         return s.substring(start, end);
+    }
+
+    //REVISED DP: much easier to understand
+    /*
+        Matrix looks like this when finished:
+    1 -0 -0 -0 -0 -0 -1 -
+    0 -1 -0 -0 -0 -1 -0 -
+    0 -0 -1 -0 -1 -0 -0 -
+    0 -0 -0 -1 -0 -0 -0 -
+    0 -0 -0 -0 -1 -0 -0 -
+    0 -0 -0 -0 -0 -1 -0 -
+    0 -0 -0 -0 -0 -0 -1 -
+    */
+    if(s.length() == 0 || s.length() == 1)
+            return s;
+        
+        int[][] matrix = new int[s.length()][s.length()];
+        String longestPalindrome = "";
+        
+        for(int i = 0; i < s.length(); i++) {
+            matrix[i][i] = 1;
+            longestPalindrome = s.substring(i, i + 1);
+        }
+        
+        for(int i = 0; i < s.length() - 1; i++) {
+            if(s.charAt(i) == s.charAt(i + 1)) {
+                matrix[i][i + 1]  = 1;
+                longestPalindrome = s.substring(i, i + 2);
+            }
+        }
+        
+        for(int i = s.length() - 3; i >= 0; i--) {
+            for(int j = s.length() - 1; j > i + 1; j--) {
+                if(s.charAt(i) == s.charAt(j)) {
+                    matrix[i][j] = matrix[i + 1][j - 1];
+                    String sub = s.substring(i, j + 1);
+                    if(sub.length() > longestPalindrome.length()) 
+                        longestPalindrome = sub;
+                }
+            }
+        }
+      
+        return s;
     }
 
 

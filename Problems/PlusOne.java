@@ -41,4 +41,31 @@ public class PlusOne{
         
         return digits; 
     }
+
+    //Version 2 = Oct. 18 2014
+    public int[] plusOne(int[] digits) {
+        
+        int carry = 1;
+        for(int i = digits.length - 1; i >= 0; i--) {
+            if(digits[i] == 9 && carry == 1) {
+                digits[i] = 0;
+                carry = 1;
+            } else {
+                digits[i] = digits[i] + carry;
+                carry = 0;
+            }
+        }
+        
+        if(carry == 1) {
+            int[] newArray = new int[digits.length + 1];
+            newArray[0] = 1;
+            carry = 0;
+            for(int i = 0; i < digits.length; i++) {
+                newArray[i + 1] = digits[i];
+            }
+            digits = newArray;
+        }
+        
+        return digits;
+    }
 }

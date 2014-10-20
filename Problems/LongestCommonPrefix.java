@@ -44,6 +44,27 @@ public class LongestCommonPrefix {
         return prefix;
     }
 
+    //Version 2 - Oct 18, 2014
+    public String longestCommonPrefix(String[] strs) {
+        if(strs.length == 0)
+            return "";
+        
+        StringBuffer buffer = new StringBuffer();
+        for(int i = 0; i < strs[0].length(); i++) {
+            char currChar = strs[0].charAt(i);
+            for(int j = 1; j < strs.length; j++) {
+                String currString = strs[j];
+                if(i >= currString.length()  || currString.charAt(i) != currChar){
+                    return new String(buffer);
+                }
+            }
+            
+            buffer.append(currChar);
+        }
+        
+        return new String(buffer);
+    }
+
     public static void main(String[] args){
         String[] test = {"ca", "a"};
         System.out.println(longestCommonPrefix(test));
