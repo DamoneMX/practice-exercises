@@ -46,6 +46,55 @@ public class SimplifyPath{
             }
         }
 
+    //Version 2: Complete time 15 mins, PATIENCE!!!
+    public String simplifyPath(String path) {
+        if (path.length() == 0) {
+           return path; 
+        }
+        
+        if (path.equals("/"))
+            return path;
+        
+        String[] components = path.split("/");
+        Stack<String> stack = new Stack<String>();
+        for(int i = components.length - 1; i >= 0; i--) {
+            String toPush = components[i];
+            if(toPush.equals(".") || toPush.equals("")) {
+                continue;
+            }
+            
+            if(!stack.isEmpty() && !toPush.equals("..")){
+                String top = stack.peek();
+                if(top.equals("..")) {
+                    stack.pop();
+                } else {
+                    stack.push(toPush);
+                }
+            } else {
+                stack.push(toPush);
+            }
+        }
+        
+        if(stack.isEmpty())
+            return "/";
+        
+        StringBuffer result = new StringBuffer();
+        while(!stack.isEmpty()) {
+            String top = stack.peek();
+            if(top.equals("..") == false) {
+                result.append("/");
+                result.append(top);
+            } 
+            
+            stack.pop();
+        }
+        
+        if(result.length() == 0)
+            return "/";
+        
+        return new String(result);
+    }
+
 /*
  *  Naive Solution: O(n^2)
  */

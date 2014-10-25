@@ -73,4 +73,62 @@ public class WordSearch{
 		return false;
 	}
 
+	//Version 2: Oct. 25, 2014
+	public boolean exist(char[][] board, String word) {
+        if(word.length() == 0 || board.length == 0 || board[0].length == 0) {
+            return false;
+        }
+        
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        
+        //1. find start point
+        for(int y = 0; y < board.length; y++) {
+            for(int x = 0; x < board[0].length; x++) {
+                if(board[y][x] == word.charAt(0)) { //start looking at that point
+                    if(trackWord(y, x, 0, word, board, visited) == true) {
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean trackWord(int y, int x, int charIndex, String word, char[][] board, boolean[][] visited) {
+        if (board[y][x] != word.charAt(charIndex)) {
+            return false;
+        }
+        
+        if (charIndex == word.length() -1) {
+            return true;
+        }
+        
+        visited[y][x] = true;
+        
+        if ( (y + 1) < board.length && !visited[y + 1][x]) {
+            if(trackWord(y + 1, x, charIndex + 1, word, board, visited) == true)
+                return true;
+        }
+        
+        if ( (y - 1) >= 0  && !visited[y - 1][x]) {
+            if(trackWord(y - 1, x, charIndex + 1, word, board, visited) == true)
+                return true;
+        }
+        
+        if ( (x+ 1) < board[0].length  && !visited[y][x + 1]) {
+            if(trackWord(y, x + 1, charIndex + 1, word, board, visited) == true)
+                return true;
+        }
+        
+        if ( (x - 1) >= 0  && !visited[y][x - 1]) {
+            if(trackWord(y, x - 1, charIndex + 1, word, board, visited) == true)
+                return true;
+        }
+        
+        visited[y][x] = false;
+        return false;
+    }
+
+
 }

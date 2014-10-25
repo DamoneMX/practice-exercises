@@ -21,4 +21,30 @@ public class Triangle {
 		
 		return sums[0];
     }
+
+    //version 2
+    public int minimumTotal(List<List<Integer>> triangle) {
+        if(triangle.size() == 0)
+            return 0;
+            
+        if(triangle.size() == 1)
+            return triangle.get(0).get(0);
+            
+        int[] results = new int[triangle.size()];
+        ArrayList<Integer> initialLevel = (ArrayList<Integer>)triangle.get(triangle.size() - 1);
+        for(int i = 0; i < results.length; i++) {
+            results[i] = initialLevel.get(i);
+        }
+        
+        for(int i = results.length - 2; i >= 0; i--) {
+            ArrayList<Integer> currentLevel = (ArrayList<Integer>)triangle.get(i);
+            for(int j = 0; j <= i; j++) {
+                int currentNumber = currentLevel.get(j);
+                int min = Math.min(results[j], results[j + 1]);
+                results[j] = currentNumber + min;
+            }
+        }
+    
+        return results[0];    
+    }
 }

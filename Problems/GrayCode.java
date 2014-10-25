@@ -4,6 +4,7 @@
 public class GrayCodeProblem {
     
     //Version 1 -> October 24, 2014
+    //could have taken 40 minutes less if I had just been patient
 	public static ArrayList<Integer> grayCode(int n) {
         ArrayList<Integer> result = new ArrayList<Integer>();
        
