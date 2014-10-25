@@ -53,4 +53,57 @@ public class RestoreIP {
         
     }
 
+    //Version 2: 
+    // quick to find solution, lazy to make it bug - free(took too long)
+        public static ArrayList<String> restoreIpAddresses(String s) {
+        ArrayList<String> result = new ArrayList<String>();      
+        if (s.length() == 0) {
+           return result;
+        }
+        
+        generateAddresses(new StringBuffer(), 0, s, result);    
+        return result;
+    }
+    
+    public static void generateAddresses(StringBuffer buffer, int count, String remaining, ArrayList<String> result){
+        if(remaining.length() == 0 && count == 4) {
+            result.add(new String(buffer));
+            return;
+        }    
+        
+        if(count > 4)
+            return;
+    
+        boolean flag = false;
+        for(int i = 1; i <= 3 && i <= remaining.length(); i++) {
+            String temp = remaining.substring(0 , i);
+            
+            if(i == 1 && temp.equals("0")) {
+                flag = true;
+            }
+                
+            if(i == 2 && flag) {
+                return;
+            }
+                
+            if(Integer.parseInt(temp) <= 255) {
+                StringBuffer copy = new StringBuffer();
+                copy.append(buffer);
+                copy.append(temp);
+                int dots = count;
+                dots++;
+                if(count <= 2) 
+                    copy.append(".");
+                
+                String newRemaining = remaining.substring(i , remaining.length());
+                if(dots == 4 && newRemaining.length() > 0)
+                    continue;
+                
+                generateAddresses(copy, dots, newRemaining, result);
+            }
+        }
+        
+    }
+
+
 }
