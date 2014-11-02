@@ -5,6 +5,34 @@
  *  Solution: Record position of parentheses in stack.
  */
 public class Solution{
+
+    //Version 2 = DP Solution. November 2, 2014
+    // longestValidParentheses(   ")((())()))"  )
+    // Array: 0 - 8 - 6 - 2 - 0 - 0 - 2 - 0 - 0 - 0
+    public static int longestValidParentheses(String s) {
+        if(s.length() < 2) {
+            return 0;
+        }
+        
+        int[] memorization = new int[s.length()];
+        int maxLength = 0;
+        for(int i = s.length() - 2; i >= 0; i--) {
+            if(s.charAt(i) == '(') {
+                int checkIndex = i + 1 + memorization[i + 1];
+                
+                if(checkIndex < s.length() && s.charAt(checkIndex) == ')') {
+                    memorization[i] = memorization[i + 1] + 2;
+                    if(checkIndex + 1 < s.length())
+                        memorization[i] += memorization[checkIndex + 1];
+                }
+            }
+            
+            maxLength = Math.max(maxLength, memorization[i]);
+        }
+       
+        return maxLength;
+    }
+
     //improvement to this method: 
     //just use an int to record length of last longest string, no need for hashmap, but both work.
     public static int longestValidParentheses(String s) {
