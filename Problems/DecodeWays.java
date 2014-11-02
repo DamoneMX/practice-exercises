@@ -7,6 +7,41 @@
  * Given an encoded message containing digits, determine the total number of ways to decode it.
  */
 public class DecodeWays {
+
+    //Version 2: Nov. 1, 2014
+    public int numDecodings(String s) {
+        if (s.length() == 0) {
+            return 0;
+        }
+        
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        return countWays(s, map);
+    }
+    
+    public int countWays(String s, HashMap<String, Integer> map) {
+        if(s.length() == 0) {
+            return 1;
+        }
+        
+        int count = 0;
+        for(int i = 0; i < s.length(); i++) {
+            String str = s.substring(0, i + 1);
+            if(Integer.parseInt(str) < 1 || Integer.parseInt(str) > 26 ) {
+                break;
+            }
+             
+            String substr = s.substring(i + 1, s.length());
+            if(map.containsKey(substr)) {
+                count += map.get(substr);
+            } else {
+                count += countWays(substr, map);
+                map.put(substr, count);
+            }
+        }
+        
+        return count;
+    }
+
     public static int numDecodings(String s){
         if(s.length() == 0 || s.length() == 1)
             return s.length();
