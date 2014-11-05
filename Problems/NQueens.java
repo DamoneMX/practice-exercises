@@ -84,4 +84,66 @@ public class NQueens {
         
         return count;
     }
+
+
+    //Version 2 = nov. 2 2014
+    public static ArrayList<String[]> solveNQueens(int n) {
+        ArrayList<String[]> result = new ArrayList<String[]>();
+        if(n == 0) {
+            return result;
+        }
+        
+        int[] positions = new int[n];
+        for(int i = 0; i < positions.length; i++) {
+            positions[0] = i;
+            solveNQueens(1, positions, result);
+        }
+        
+        return result;
+    }
+    
+    public static void solveNQueens(int currentIndex, int[] positions, ArrayList<String[]> result){
+        if(currentIndex == positions.length) {
+            //create strings
+            String[] arr = new String[positions.length];
+            for(int i = 0; i < positions.length; i++) {
+                int column = positions[i];
+                StringBuffer buffer = new StringBuffer();
+                for(int j = 0; j < positions.length; j++) {
+                    if(j == column) {
+                        buffer.append("Q");
+                    } else {
+                        buffer.append(".");
+                    }
+                }
+                arr[i] = new String(buffer);
+            }
+            result.add(arr);
+            
+            return;
+        }
+        
+        //i = column, j = row
+        for(int i = 0; i < positions.length; i++) {
+            boolean invalid = false;
+            for(int j = 0; j < currentIndex; j++) {
+                int column = positions[j];
+                int dist = Math.abs(j - currentIndex);
+                int dist1 = Math.abs(column - i);
+                if(column == i || (dist == dist1 )) //find diagonal
+                    invalid = true;
+            }
+            
+            if(invalid == true) {
+                continue;
+            }
+            
+            int[] copy = new int[positions.length];
+            for(int k = 0; k < positions.length; k++) {
+                copy[k] = positions[k];
+            }
+            copy[currentIndex] = i;
+            solveNQueens(currentIndex + 1, copy, result);
+        }
+    }
 }

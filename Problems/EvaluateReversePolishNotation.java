@@ -52,4 +52,50 @@ public class EvaluateReversePolishNotation {
         
         return total;
     }
+
+    //Version 2
+    public int evalRPN(String[] tokens) {
+        if(tokens.length == 0) {
+            return 0;
+        }
+        
+        if (tokens.length == 1) {
+            return Integer.parseInt(tokens[0]);
+            //check valid input
+        }
+        
+        int total = 0;
+        Stack<Integer> stack = new Stack<Integer>();
+        for(int i = 0; i < tokens.length; i++) {
+            String current = tokens[i];
+            // +, -, *, /
+            if(current.equals("+")||current.equals("-")||current.equals("*")||current.equals("/")){
+                int num2 = stack.pop();
+                int num1 = stack.pop();
+                
+                Integer result = 0;
+                switch(current) {
+                    case "+":
+                        result = num1 + num2;
+                        break;
+                    case "-": 
+                        result = num1 - num2;
+                        break;
+                    case "*":
+                        result = num1 * num2;
+                        break;
+                    case "/":
+                        result = num1 / num2;
+                        break;
+                }
+                
+                stack.push(result);
+                total = result;
+            } else {
+                stack.push(Integer.parseInt(current));
+            }
+        }
+        
+        return total;
+    }
 }

@@ -2,6 +2,30 @@
  * Determine whether an integer is a palindrome. Do this without extra space.
  */
 public class PalindromeNumber{
+
+	//Version 2: Nov. 4 2014
+	public static boolean isPalindrome(int x) {
+		if(x < 0) {
+            return false;
+        }   
+        
+        int temp = x;
+        int count = 0;
+        
+        while(temp != 0){
+            count += temp % 10;
+            temp = temp / 10;
+            if(temp != 0)
+            	count *= 10;
+        }
+        
+        
+        if(x - count == 0)
+        	return true;
+        else 
+        	return false;
+    }
+
 	public boolean isPalindrome(int x) {
         if(x < 0)
 			return false;
