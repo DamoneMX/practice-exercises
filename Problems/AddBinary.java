@@ -5,6 +5,59 @@
  *  a + b = "100"
  */
 public class AddBinary {
+
+    //Version 2 = Nov. 5 2014
+    public String addBinary(String a, String b) {
+        if(a.length() == 0) {
+            return b;
+        }
+        
+        if(b.length() == 0) {
+            return a;
+        }
+        
+        char[] arr1 = a.toCharArray();
+        char[] arr2 = b.toCharArray();
+        int i = a.length() - 1;
+        int j = b.length() - 1;
+        int carry = 0;
+        StringBuffer buffer = new StringBuffer();
+        while(i >= 0 || j >= 0){
+            int sum = 0;
+            if(i >= 0) {
+                if(arr1[i] == '1') 
+                    sum += 1;
+                i--;
+            }
+            
+            if (j >= 0) {
+                if(arr2[j] == '1')
+                    sum += 1;
+                j--;
+            }
+            
+            sum += carry;
+            
+            if(sum == 2){
+                buffer.insert(0,'0'); //this will be in reverse
+                carry = 1;
+            } else if (sum == 3){
+                buffer.insert(0,'1'); //this will be in reverse
+                carry = 1;
+            }else {
+                buffer.insert(0,sum);
+                carry = 0;
+            }
+            
+        }
+        
+        if(carry == 1){
+            buffer.insert(0, 1);
+        }
+        
+        return new String(buffer);
+    }
+
     public String addBinary(String a, String b) {
         if(a.length() == 0)
         	return b;
