@@ -36,4 +36,39 @@ public class ValidateBinarySearchTree {
         
         return true;
     }
+
+    //Version 2: Nov. 5 2014
+    public boolean isValidBST(TreeNode root) {
+        if(root == null) {
+            return true;
+        }
+        
+        return isValidBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+    
+    public boolean isValidBST(TreeNode root, int min, int max){
+        if(root.val <= min)
+            return false;
+            
+        if(root.val >= max)
+            return false;
+        
+        if(root.left != null) {
+            if(root.val < root.left.val) 
+                return false;
+            
+            if(isValidBST(root.left, min, root.val) == false) 
+                return false;
+        }
+        
+        if(root.right != null) {
+            if(root.val > root.right.val)
+                return false;
+            
+            if(isValidBST(root.right, root.val, max) == false)
+                return false;
+        }
+        
+        return true;
+    }
 }
