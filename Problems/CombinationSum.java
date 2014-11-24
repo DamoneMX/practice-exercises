@@ -29,4 +29,44 @@ public class CombinationSum {
             }
         }
     }
+
+    //Version 2 = Nov 8, 2014
+    public ArrayList<ArrayList<Integer>> combinationSum(int[] candidates, int target) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if (candidates.length == 0) {
+            return result;
+        }
+        
+        Arrays.sort(candidates);
+        
+        for(int i = 0; i < candidates.length; i++) {
+            if(candidates[i] > target)
+                continue;
+            
+            ArrayList<Integer> numbers = new ArrayList<Integer>();
+            numbers.add(candidates[i]);
+            
+            findSum(i, target, candidates[i],  numbers, result, candidates);
+        }
+        
+        return result;
+    }
+    
+    public void findSum(int index, int target, int sum, ArrayList<Integer> numbers, ArrayList<ArrayList<Integer>> result, int[] candidates) {
+        if(sum == target) {
+           result.add(numbers);
+           return;
+        }
+        
+        for(int i = index; i < candidates.length; i++) {
+            if(sum + candidates[i] > target) 
+                break;
+            
+            ArrayList<Integer> copy = new ArrayList<Integer>();
+            copy.addAll(numbers);
+            copy.add(candidates[i]);
+            findSum(i, target, sum + candidates[i], copy,  result, candidates);
+        }
+        
+    }
 }
