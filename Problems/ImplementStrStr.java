@@ -46,4 +46,31 @@ public class RestoreIP {
 		return true;
 	}
 
+	//Version 2 = Nov. 26 2014
+	public int strStr(String haystack, String needle) {
+        //O(mn) == O(n^2) -> go char by char and compare against needle
+        if(needle.length() == 0) {
+            return 0;
+        }
+        
+        if(haystack.length() == 0){
+            return -1;
+        }
+        
+        HashSet<String> set = new HashSet<String>();
+        set.add(needle);
+        int needleLength = needle.length();
+        for(int i = 0; i < haystack.length(); i++) {
+            if(i + needleLength > haystack.length()) {
+                continue;
+            }
+            
+            if( set.contains(haystack.substring(i, i + needleLength)) ) {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+
 }
